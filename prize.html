@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prize Page</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      color: #fff;
+      background: #000;
+      overflow-x: hidden;
+    }
+
+    /* Header Section */
+    header {
+      text-align: center;
+      margin-top: 80px;
+      z-index: 3;
+      position: relative;
+      padding: 0 20px;
+    }
+
+    header h1 {
+      color: goldenrod;
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    header h3 {
+      color: #eee;
+      font-size: 1.1rem;
+      font-weight: 400;
+    }
+
+    /* Box Styling */
+    .box1 {
+      background: rgba(0,0,0,0.6);
+      border: 2px solid #000;
+      border-radius: 10px;
+      padding: 20px 40px;
+      display: inline-block;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    /* Prize Container */
+    .prize-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 20px;
+      padding: 20px;
+      position: relative;
+      z-index: 5;
+    }
+
+    /* Individual Prize Box */
+    .prize-box {
+      border: 2px solid #0c5eb4;
+      background: rgba(0,0,0,0.85);
+      border-radius: 12px;
+      padding: 20px;
+      width: 260px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .prize-box:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #00f0ff, 0 0 30px #a020f0;
+    }
+
+    .prize-box h2 {
+      color: #00f0ff;
+      margin-bottom: 12px;
+      font-size: 1.5rem;
+    }
+
+    .prize-box ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      text-align: center;
+      color: #ccc;
+    }
+
+    .prize-box li {
+      margin: 8px 0;
+      font-size: 1.1rem;
+    }
+
+    /* Fullscreen Canvas Background */
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    /* Back Button */
+    .back-btn {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      padding: 10px 16px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #00f0ff, #a020f0);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      z-index: 1000;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .back-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #00f0ff, 0 0 25px #a020f0;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 1.6rem;
+      }
+
+      header h3 {
+        font-size: 1rem;
+      }
+
+      .box1 {
+        width: 90%;
+        margin: 20px auto;
+        display: block;
+        padding: 15px;
+      }
+
+      .prize-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .prize-box {
+        width: 90%;
+        max-width: 320px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Back to Home Button -->
+  <button class="back-btn" onclick="window.location.href='index.html'">← Back</button>
+
+  <!-- Animated Background -->
+  <canvas id="bg-canvas"></canvas>
+
+  <section id="Prizes">
+    <header>
+      <div class="box1">
+        <h1>Project Expo Rewards</h1>
+        <h3>Winning Prizes for the Project Expo</h3>
+      </div>
+    </header>
+
+    <div class="prize-container">
+      <div class="prize-box">
+        <h2>First Prize</h2>
+        <ul>
+          <li><img src="https://png.pngtree.com/png-vector/20220731/ourmid/pngtree-gold-medal-1st-place-award-icon-png-image_6093703.png" height="50" width="50"></li>
+          <li>₹10,000</li>
+        </ul>
+      </div>
+
+      <div class="prize-box">
+        <h2>Second Prize</h2>
+        <ul>
+          <li><img src="https://png.pngtree.com/png-vector/20220731/ourmid/pngtree-silver-medal-2nd-place-award-icon-png-image_6093704.png" height="50" width="50"></li>
+          <li>₹5,000</li>
+        </ul>
+      </div>
+
+      <div class="prize-box">
+        <h2>Third Prize</h2>
+        <ul>
+          <li><img src="https://png.pngtree.com/png-vector/20220731/ourmid/pngtree-3rd-place-bronze-medal-award-icon-png-image_6093735.png" height="50" width="50"></li>
+          <li>₹2,500</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stars Animation -->
+  <script>
+    const canvas = document.getElementById("bg-canvas");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    function createStars(count) {
+      stars = [];
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 1.5,
+          dx: (Math.random() - 0.5) * 0.3,
+          dy: (Math.random() - 0.5) * 0.3
+        });
+      }
+    }
+    createStars(120);
+
+    function animateStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "white";
+      stars.forEach(star => {
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fill();
+        star.x += star.dx;
+        star.y += star.dy;
+        if (star.x < 0 || star.x > canvas.width) star.dx *= -1;
+        if (star.y < 0 || star.y > canvas.height) star.dy *= -1;
+      });
+      requestAnimationFrame(animateStars);
+    }
+    animateStars();
+  </script>
+</body>
+</html>
